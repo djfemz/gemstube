@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body{
+            background-color:rgba(203, 202, 202, 0.879);
+        }
+        p{
+            font-family: 'Roboto';
+        }
+        .main-container{
+            max-width: 20rem;
+            margin: auto;
+        }
+
+        .header{
+            font-weight: 400;
+            font-size: 15px;
+            color: black;
+        }
+
+        .hero-image{
+            min-width: 20rem;
+            max-height: 5rem;
+        }
+
+        .verify-button{
+            width: 200px;
+            height: 30px;
+            border: none;
+            border-radius: 15px;
+            transition: 0.4s;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .social-icon{
+            width: 40px;
+            height: 40px;
+
+        }
+
+        .verify-button:hover{
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+
+        .verify-button:active{
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="main-container">
+    <img class="hero-image" src="./img/logo-color.png"/>
+    <p class="header">
+        Welcome to gemstube. We wish you an amazing experience
+    </p>
+    <a href="">
+        <button class="verify-button">
+            Verify
+        </button>
+    </a>
+
+
+    <img class="social-icon" src="./social-icons/icons8-facebook-96.png"/>
+    <img class="social-icon" src="./social-icons/icons8-twitterx-50.png"/>
+    <img class="social-icon" src="./social-icons/icons8-linkedin-48.png"/>
+</div>
+</body>
+</html>
