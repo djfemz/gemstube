@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CloudConfig {
-
     @Value("${cloud.api.key}")
     private String apiKey;
     @Value("${cloud.api.secret}")

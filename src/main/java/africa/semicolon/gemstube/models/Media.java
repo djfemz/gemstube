@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+import static jakarta.persistence.EnumType.ORDINAL;
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.AUTO;
 
 @Entity
@@ -25,4 +27,11 @@ public class Media {
     @OneToOne(fetch = FetchType.EAGER)
     private User uploader;
     private LocalDateTime createdAt;
+    @Enumerated
+    private Type type;
+
+    @PrePersist
+    public void setCreatedAt(){
+        this.createdAt=LocalDateTime.now();
+    }
 }

@@ -1,6 +1,7 @@
 package africa.semicolon.gemstube.services;
 
 
+import africa.semicolon.gemstube.dtos.request.RegisterRequest;
 import africa.semicolon.gemstube.dtos.request.UploadMediaRequest;
 import africa.semicolon.gemstube.dtos.response.UploadMediaResponse;
 import africa.semicolon.gemstube.exceptions.GemsTubeException;
@@ -15,27 +16,33 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static africa.semicolon.gemstube.services.CloudServiceTest.IMAGE_LOCATION;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class MediaServiceTest {
     @Autowired
     private MediaService mediaService;
+    @Autowired
+    private UserService userService;
 
     @Test
     public void testUploadMedia() throws GemsTubeException {
-            UploadMediaRequest request = new UploadMediaRequest();
-            request.setCreatorId(1L);
-            request.setTitle("this is our test media");
-            request.setMultipartFile(getTestFile());
-            UploadMediaResponse response = mediaService.upload(request);
-            assertThat(response).isNotNull();
-
+        RegisterRequest registerRequest = new RegisterRequest();
+        registerRequest.setEmail("test@email.com");
+        registerRequest.setPassword("password");
+        var registerResponse = userService.register(registerRequest);
+        UploadMediaRequest request = new UploadMediaRequest();
+        request.setCreatorId(registerResponse.getId());
+        request.setTitle("this is our test media");
+        request.setMultipartFile(getTestFile(IMAGE_LOCATION));
+        UploadMediaResponse response = mediaService.upload(request);
+        assertThat(response).isNotNull();
     }
 
-    public static MultipartFile getTestFile(){
-        Path path = Paths.get("C:\\Users\\semicolon\\Documents\\spring_projects\\gemstube\\src\\main\\resources\\assets\\gems-tube-hero-image.jpg");
-        try(var inputStream = Files.newInputStream(path);) {
+    public static MultipartFile getTestFile(String fileLocation){
+        Path path = Paths.get(fileLocation);
+        try(var inputStream = Files.newInputStream(path)) {
             MultipartFile file = new MockMultipartFile("test-image", inputStream);
             return file;
         }catch (IOException exception){
