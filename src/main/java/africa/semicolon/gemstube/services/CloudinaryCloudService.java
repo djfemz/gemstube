@@ -1,7 +1,6 @@
 package africa.semicolon.gemstube.services;
 
 import africa.semicolon.gemstube.exceptions.MediaUploadException;
-import africa.semicolon.gemstube.models.Type;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import lombok.AllArgsConstructor;
@@ -19,7 +18,8 @@ public class CloudinaryCloudService implements CloudService{
     private final Cloudinary cloudinary;
 
     @Override
-    public String upload(MultipartFile multipartFile) throws MediaUploadException{
+    public String upload(MultipartFile multipartFile) throws MediaUploadException {
+
         try {
             Map<?, ?> uploadResponse = cloudinary.uploader().upload(multipartFile.getBytes(),
                     ObjectUtils.asMap(

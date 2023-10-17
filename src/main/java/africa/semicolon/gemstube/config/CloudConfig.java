@@ -22,7 +22,8 @@ public class CloudConfig {
                 "cloud_name", cloudName,
                 "api_key", apiKey,
                 "api_secret", apiSecret,
-                "secure", "true"
+                "secure", "true",
+                "folder", "gemstube"
         ));
     }
 }
