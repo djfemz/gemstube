@@ -3,6 +3,7 @@ package africa.semicolon.gemstube.services;
 import africa.semicolon.gemstube.dtos.request.UploadMediaRequest;
 import africa.semicolon.gemstube.dtos.response.UploadMediaResponse;
 import africa.semicolon.gemstube.exceptions.GemsTubeException;
+import africa.semicolon.gemstube.exceptions.NoMediaFoundException;
 import africa.semicolon.gemstube.models.Media;
 import africa.semicolon.gemstube.models.User;
 import africa.semicolon.gemstube.repositories.MediaRepository;
@@ -26,6 +27,17 @@ public class GemsTubeMediaService implements MediaService{
         media.setUploader(user);
         Media savedMedia = mediaRepository.save(media);
         return buildUploadMediaResponse(savedMedia);
+    }
+
+    @Override
+    public Media getMediaById(Long mediaId) throws NoMediaFoundException {
+        return mediaRepository.findById(mediaId)
+                .orElseThrow(() -> new NoMediaFoundException(String.format("No media with Id %d found", mediaId)));
+    }
+
+    @Override
+    public Media save(Media media) {
+        return mediaRepository.save(media);
     }
 
     private static UploadMediaResponse buildUploadMediaResponse(Media media){

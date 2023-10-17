@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static jakarta.persistence.EnumType.ORDINAL;
 import static jakarta.persistence.EnumType.STRING;
@@ -27,11 +28,13 @@ public class Media {
     @OneToOne(fetch = FetchType.EAGER)
     private User uploader;
     private LocalDateTime createdAt;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Comment> comments;
     @Enumerated
     private Type type;
 
     @PrePersist
-    public void setCreatedAt(){
-        this.createdAt=LocalDateTime.now();
+    public void setCreatedAt() {
+        this.createdAt = LocalDateTime.now();
     }
 }

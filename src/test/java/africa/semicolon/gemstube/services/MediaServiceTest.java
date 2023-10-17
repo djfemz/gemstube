@@ -5,6 +5,10 @@ import africa.semicolon.gemstube.dtos.request.RegisterRequest;
 import africa.semicolon.gemstube.dtos.request.UploadMediaRequest;
 import africa.semicolon.gemstube.dtos.response.UploadMediaResponse;
 import africa.semicolon.gemstube.exceptions.GemsTubeException;
+import africa.semicolon.gemstube.exceptions.NoMediaFoundException;
+import africa.semicolon.gemstube.models.Media;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +22,8 @@ import java.nio.file.Paths;
 
 import static africa.semicolon.gemstube.services.CloudServiceTest.IMAGE_LOCATION;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 public class MediaServiceTest {
@@ -25,9 +31,10 @@ public class MediaServiceTest {
     private MediaService mediaService;
     @Autowired
     private UserService userService;
+    private UploadMediaResponse response;
 
-    @Test
-    public void testUploadMedia() throws GemsTubeException {
+    @BeforeEach
+    public void setUp() throws GemsTubeException {
         RegisterRequest registerRequest = new RegisterRequest();
         registerRequest.setEmail("test@email.com");
         registerRequest.setPassword("password");
@@ -36,8 +43,28 @@ public class MediaServiceTest {
         request.setCreatorId(registerResponse.getId());
         request.setTitle("this is our test media");
         request.setMultipartFile(getTestFile(IMAGE_LOCATION));
-        UploadMediaResponse response = mediaService.upload(request);
+        response = mediaService.upload(request);
+    }
+
+    @Test
+    public void testUploadMedia() throws GemsTubeException {
         assertThat(response).isNotNull();
+    }
+
+    @Test
+    public void testThatWeCanGetMediaById() throws GemsTubeException {
+        Media foundMedia = mediaService.getMediaById(response.getMediaId());
+        assertNotNull(foundMedia);
+    }
+
+    @Test
+    public void testWeCanSaveOrUpdateMediaDetails() throws NoMediaFoundException {
+        String newTitle = "Our new title";
+        Media media = mediaService.getMediaById(response.getMediaId());
+        media.setTitle(newTitle);
+        Media savedMedia = mediaService.save(media);
+        assertNotNull(savedMedia);
+        assertEquals(newTitle, savedMedia.getTitle());
     }
 
     public static MultipartFile getTestFile(String fileLocation){
