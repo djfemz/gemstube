@@ -11,15 +11,17 @@ import java.time.LocalDateTime;
 import static jakarta.persistence.EnumType.ORDINAL;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.AUTO;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Table (name = "media")
 public class Media {
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String title;
     private String description;
@@ -27,8 +29,7 @@ public class Media {
     @OneToOne(fetch = FetchType.EAGER)
     private User uploader;
     private LocalDateTime createdAt;
-    @Enumerated
-    private Type type;
+
 
     @PrePersist
     public void setCreatedAt(){

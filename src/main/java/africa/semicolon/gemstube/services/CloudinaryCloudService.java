@@ -1,7 +1,6 @@
 package africa.semicolon.gemstube.services;
 
 import africa.semicolon.gemstube.exceptions.MediaUploadException;
-import africa.semicolon.gemstube.models.Type;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import lombok.AllArgsConstructor;

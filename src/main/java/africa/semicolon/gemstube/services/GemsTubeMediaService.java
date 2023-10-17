@@ -34,4 +34,10 @@ public class GemsTubeMediaService implements MediaService{
         response.setMediaId(media.getId());
         return response;
     }
+
+    @Override
+    public Media getMediaById(Long id) throws GemsTubeException {
+        return mediaRepository.findById(id).orElseThrow( ()-> new GemsTubeException(String.format("Media with id %d not found", id)));
+
+    }
 }

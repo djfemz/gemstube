@@ -7,18 +7,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-import static jakarta.persistence.GenerationType.IDENTITY;
-
 @Entity
-@Table(name = "users")
+@NoArgsConstructor
 @Setter
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
-public class User {
+@Table (name = "subtitle")
+public class Subtitle {
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
-    private String password;
+    @OneToOne(fetch = FetchType.EAGER)
+    private Media media;
+
+    private String url;
 }

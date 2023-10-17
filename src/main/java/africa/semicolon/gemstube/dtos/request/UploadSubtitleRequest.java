@@ -6,14 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UploadMediaRequest {
-    private Long creatorId;
-    private String title;
+public class UploadSubtitleRequest {
+
     private MultipartFile multipartFile;
-    private String description;
+    private Long mediaId;
 
 }
