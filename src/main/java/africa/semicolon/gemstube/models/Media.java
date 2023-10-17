@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import static jakarta.persistence.EnumType.ORDINAL;
-import static jakarta.persistence.EnumType.STRING;
-import static jakarta.persistence.GenerationType.AUTO;
+
+import static jakarta.persistence.CascadeType.*;
+import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -30,6 +31,8 @@ public class Media {
     private User uploader;
     private LocalDateTime createdAt;
     private  String subtitleUrl;
+    @OneToMany(fetch = EAGER, cascade = {REMOVE, MERGE, PERSIST}, orphanRemoval = true)
+    private List<Like> likes;
 
     @PrePersist
     public void setCreatedAt(){

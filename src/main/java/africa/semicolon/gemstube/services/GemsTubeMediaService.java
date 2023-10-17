@@ -5,6 +5,7 @@ import africa.semicolon.gemstube.dtos.request.UploadSubtitleRequest;
 import africa.semicolon.gemstube.dtos.response.UploadMediaResponse;
 import africa.semicolon.gemstube.dtos.response.UploadSubtitleResponse;
 import africa.semicolon.gemstube.exceptions.GemsTubeException;
+import africa.semicolon.gemstube.models.Like;
 import africa.semicolon.gemstube.models.Media;
 import africa.semicolon.gemstube.models.User;
 import africa.semicolon.gemstube.repositories.MediaRepository;
@@ -13,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -44,6 +46,21 @@ public class GemsTubeMediaService implements MediaService{
         response.setMediaId(media.getId());
         return response;
     }
+
+    @Override
+    public Long countMediaLikes(Long mediaId) throws GemsTubeException {
+        Media foundMedia = getMediaById(mediaId);
+        List<Like> likes = foundMedia.getLikes();
+        return (long)likes.size();
+    }
+
+
+    @Override
+    public Media updateMedia(Media media) {
+        Media savedMedia = mediaRepository.save(media);
+        return savedMedia;
+    }
+
 
     @Override
     public Media getMediaById(Long id) throws GemsTubeException {
