@@ -5,9 +5,7 @@ import africa.semicolon.gemstube.dtos.request.RegisterRequest;
 import africa.semicolon.gemstube.dtos.request.UploadMediaRequest;
 import africa.semicolon.gemstube.dtos.response.UploadMediaResponse;
 import africa.semicolon.gemstube.exceptions.GemsTubeException;
-import africa.semicolon.gemstube.exceptions.NoMediaFoundException;
 import africa.semicolon.gemstube.models.Media;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,15 +55,6 @@ public class MediaServiceTest {
         assertNotNull(foundMedia);
     }
 
-    @Test
-    public void testWeCanSaveOrUpdateMediaDetails() throws NoMediaFoundException {
-        String newTitle = "Our new title";
-        Media media = mediaService.getMediaById(response.getMediaId());
-        media.setTitle(newTitle);
-        Media savedMedia = mediaService.save(media);
-        assertNotNull(savedMedia);
-        assertEquals(newTitle, savedMedia.getTitle());
-    }
 
     public static MultipartFile getTestFile(String fileLocation){
         Path path = Paths.get(fileLocation);

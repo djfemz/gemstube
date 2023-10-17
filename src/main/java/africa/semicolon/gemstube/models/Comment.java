@@ -19,9 +19,11 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private User commenter;
     private String message;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Media media;
     private LocalDateTime createdAt;
 
     @PrePersist

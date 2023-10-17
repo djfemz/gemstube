@@ -28,8 +28,6 @@ public class Media {
     @OneToOne(fetch = FetchType.EAGER)
     private User uploader;
     private LocalDateTime createdAt;
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Comment> comments;
     @Enumerated
     private Type type;
 
