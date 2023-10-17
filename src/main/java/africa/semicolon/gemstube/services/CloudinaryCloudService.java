@@ -18,7 +18,8 @@ public class CloudinaryCloudService implements CloudService{
     private final Cloudinary cloudinary;
 
     @Override
-    public String upload(MultipartFile multipartFile) throws MediaUploadException{
+    public String upload(MultipartFile multipartFile) throws MediaUploadException {
+
         try {
             Map<?, ?> uploadResponse = cloudinary.uploader().upload(multipartFile.getBytes(),
                     ObjectUtils.asMap(

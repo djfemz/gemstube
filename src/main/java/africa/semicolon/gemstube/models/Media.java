@@ -29,7 +29,7 @@ public class Media {
     @OneToOne(fetch = FetchType.EAGER)
     private User uploader;
     private LocalDateTime createdAt;
-
+    private  String subtitleUrl;
 
     @PrePersist
     public void setCreatedAt(){

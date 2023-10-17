@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Optional;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,5 +17,6 @@ public class UploadMediaRequest {
     private String title;
     private MultipartFile multipartFile;
     private String description;
+    private Optional<MultipartFile> subtitleFile;
 
 }
