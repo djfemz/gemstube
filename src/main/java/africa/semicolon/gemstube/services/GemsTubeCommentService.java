@@ -8,13 +8,15 @@ import africa.semicolon.gemstube.models.Media;
 import africa.semicolon.gemstube.models.User;
 import africa.semicolon.gemstube.repositories.CommentRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class GemsTubeCommentService implements CommentService{
 
     private final UserService userService;
@@ -25,6 +27,7 @@ public class GemsTubeCommentService implements CommentService{
     public CreateCommentResponse createComment(CreateCommentRequest createCommentRequest) throws GemsTubeException {
         User commenter = userService.getUserById(createCommentRequest.getCommenterId());
         Media mediaToBeCommented = mediaService.getMediaById(createCommentRequest.getMediaId());
+        log.info("media --> {}", mediaToBeCommented);
         Comment comment = new Comment();
         comment.setCommenter(commenter);
         comment.setMedia(mediaToBeCommented);

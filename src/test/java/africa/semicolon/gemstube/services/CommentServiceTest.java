@@ -35,6 +35,7 @@ public class CommentServiceTest {
         request.setCreatorId(registerResponse.getId());
         request.setTitle("this is our test media");
         request.setMultipartFile(getTestFile(IMAGE_LOCATION));
+        request.setDescription("An image of me");
         UploadMediaResponse response = mediaService.upload(request);
 
         CreateCommentRequest createCommentRequest = new CreateCommentRequest();
@@ -44,7 +45,7 @@ public class CommentServiceTest {
 
         CreateCommentResponse createCommentResponse = commentService.createComment(createCommentRequest);
         assertNotNull(createCommentResponse);
-        assertNotNull(createCommentResponse.getCommentId());
+        assertNotNull(createCommentResponse.getId());
     }
 
 }

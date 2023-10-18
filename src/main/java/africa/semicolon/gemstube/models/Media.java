@@ -1,10 +1,7 @@
 package africa.semicolon.gemstube.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +15,7 @@ import static jakarta.persistence.GenerationType.AUTO;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Media {
     @Id
     @GeneratedValue(strategy = AUTO)
@@ -25,11 +23,11 @@ public class Media {
     private String title;
     private String description;
     private String url;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
+    @JoinColumn(name = "user_id")
     private User uploader;
     private LocalDateTime createdAt;
-    @Enumerated
-    private Type type;
+
 
     @PrePersist
     public void setCreatedAt() {

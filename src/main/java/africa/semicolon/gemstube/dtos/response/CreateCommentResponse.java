@@ -8,6 +8,5 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CreateCommentResponse {
-    private Long commentId;
-    private Long mediaId;
+    private Long id;
 }
