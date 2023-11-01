@@ -4,10 +4,12 @@ import africa.semicolon.gemstube.dtos.request.EmailRequest;
 import africa.semicolon.gemstube.dtos.request.Recipient;
 import africa.semicolon.gemstube.dtos.request.RegisterRequest;
 import africa.semicolon.gemstube.dtos.response.RegisterResponse;
+import africa.semicolon.gemstube.dtos.response.UserResponse;
 import africa.semicolon.gemstube.exceptions.GemsTubeException;
 import africa.semicolon.gemstube.models.User;
 import africa.semicolon.gemstube.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -18,6 +20,7 @@ import java.util.List;
 public class GemsTubeUserService implements UserService{
     private final UserRepository userRepository;
     private final MailService mailService;
+    private final ModelMapper modelMapper;
 
     @Override
     public RegisterResponse register(RegisterRequest registerRequest) {
@@ -38,5 +41,11 @@ public class GemsTubeUserService implements UserService{
         return userRepository.findById(id).orElseThrow(
                 ()-> new GemsTubeException(String.format("user with id %d not found", id))
         );
+    }
+
+    @Override
+    public UserResponse getUserBy(Long id) throws GemsTubeException {
+        User user = getUserById(id);
+        return modelMapper.map(user, UserResponse.class);
     }
 }
