@@ -5,6 +5,7 @@ import africa.semicolon.gemstube.dtos.response.RegisterResponse;
 import africa.semicolon.gemstube.dtos.response.UserResponse;
 import africa.semicolon.gemstube.exceptions.GemsTubeException;
 import africa.semicolon.gemstube.services.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class UserController {
 
     private final UserService userService;
     @PostMapping
-    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest request){
+    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request){
         return ResponseEntity.status(CREATED).body(userService.register(request));
     }
 
@@ -30,5 +31,10 @@ public class UserController {
         }catch (GemsTubeException exception){
             return ResponseEntity.badRequest().body(exception);
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getUsers(@RequestParam int page, @RequestParam int size){
+        return ResponseEntity.ok(userService.getUsers(page, size));
     }
 }

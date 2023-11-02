@@ -15,8 +15,7 @@ import java.util.Optional;
 public class UploadMediaRequest {
     private Long creatorId;
     private String title;
-    private MultipartFile multipartFile;
+    private MultipartFile mediaFile;
     private String description;
-    private Optional<MultipartFile> subtitleFile;
-
+    private Optional<MultipartFile> subtitleFile = Optional.empty();
 }

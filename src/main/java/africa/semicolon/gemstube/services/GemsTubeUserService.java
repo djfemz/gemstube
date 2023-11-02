@@ -9,14 +9,18 @@ import africa.semicolon.gemstube.exceptions.GemsTubeException;
 import africa.semicolon.gemstube.models.User;
 import africa.semicolon.gemstube.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class GemsTubeUserService implements UserService{
     private final UserRepository userRepository;
     private final MailService mailService;
@@ -47,5 +51,16 @@ public class GemsTubeUserService implements UserService{
     public UserResponse getUserBy(Long id) throws GemsTubeException {
         User user = getUserById(id);
         return modelMapper.map(user, UserResponse.class);
+    }
+
+    @Override
+    public List<UserResponse> getUsers(int page, int size) {
+        Pageable pageable = PageRequest.of(page-1, size);
+        Page<User> userPage = userRepository.findAll(pageable);
+        List<User> users = userPage.getContent();
+        return users.stream()
+                    .map(user->modelMapper.map(user, UserResponse.class))
+                    .toList();
+
     }
 }

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class CloudServiceTest {
     @Autowired
     private CloudService cloudService;
-    public static final String IMAGE_LOCATION = "/home/user/Desktop/GemstubeClone/gemstube/src/main/resources/assets/logo.jpeg";
+    public static final String IMAGE_LOCATION = "C:\\Users\\semicolon\\Documents\\spring_projects\\gemstube\\src\\main\\resources\\assets\\gems-tube-hero-image.jpg";
 
     public static final String AUDIO_LOCATION = "/home/user/Desktop/GemstubeClone/gemstube/src/main/resources/assets/Ed Sheeran - Castle On The Hill [Official Lyric Video] (2).mp3";
     public static final String VIDEO_LOCATION = "/home/user/Desktop/GemstubeClone/gemstube/src/main/resources/assets/video.mp4";

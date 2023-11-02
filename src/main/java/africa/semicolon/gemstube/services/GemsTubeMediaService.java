@@ -24,10 +24,10 @@ public class GemsTubeMediaService implements MediaService{
     @Override
     public UploadMediaResponse upload(UploadMediaRequest uploadMediaRequest) throws GemsTubeException{
         User user = userService.getUserById(uploadMediaRequest.getCreatorId());
-        String url = cloudService.upload(uploadMediaRequest.getMultipartFile());
+        String url = cloudService.upload(uploadMediaRequest.getMediaFile());
         String subtitleUrl = null;
         if (uploadMediaRequest.getSubtitleFile().isPresent()) {
-        subtitleUrl = cloudService.upload(uploadMediaRequest.getSubtitleFile().get());
+            subtitleUrl = cloudService.upload(uploadMediaRequest.getSubtitleFile().get());
         }
 
         Media media = modelMapper.map(uploadMediaRequest, Media.class);

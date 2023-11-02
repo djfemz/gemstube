@@ -2,26 +2,32 @@ package africa.semicolon.gemstube.models;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.UuidGenerator;
+import lombok.*;
 
-import java.util.UUID;
+import java.time.LocalDateTime;
 
-import static jakarta.persistence.GenerationType.*;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Comment{
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String text;
-    @OneToOne
+    @ManyToOne
     private User commenter;
-    @OneToOne
+    @ManyToOne
     private Media media;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void setUpdatedAt(){
+        updatedAt=LocalDateTime.now();
+    }
 }

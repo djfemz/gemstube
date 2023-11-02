@@ -19,6 +19,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
 }

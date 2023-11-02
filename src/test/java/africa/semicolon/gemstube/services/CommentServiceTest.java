@@ -2,6 +2,7 @@ package africa.semicolon.gemstube.services;
 
 
 import africa.semicolon.gemstube.dtos.request.AddCommentRequest;
+import africa.semicolon.gemstube.dtos.request.UpdateCommentRequest;
 import africa.semicolon.gemstube.dtos.response.ApiResponse;
 import africa.semicolon.gemstube.exceptions.GemsTubeException;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,14 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void testUpdateComment(){
+    @Sql({"/db/insert.sql"})
+    public void testUpdateComment() throws GemsTubeException {
+        UpdateCommentRequest request = new UpdateCommentRequest();
+        request.setText("Your picture is now old jare");
 
+        ApiResponse<?> response = commentService.updateComment(200L, 100L, request);
+
+        assertThat(response).isNotNull();
+        assertThat(response.getMessage()).isNotNull();
     }
 }

@@ -2,8 +2,10 @@ package africa.semicolon.gemstube.services;
 
 
 import africa.semicolon.gemstube.dtos.request.AddCommentRequest;
+import africa.semicolon.gemstube.dtos.request.UpdateCommentRequest;
 import africa.semicolon.gemstube.dtos.response.ApiResponse;
 import africa.semicolon.gemstube.exceptions.GemsTubeException;
+import africa.semicolon.gemstube.exceptions.ResourceNotFoundException;
 import africa.semicolon.gemstube.models.Comment;
 import africa.semicolon.gemstube.models.Media;
 import africa.semicolon.gemstube.models.User;
@@ -29,6 +31,23 @@ public class GemsTubeCommentService implements CommentService{
         commentRepository.save(comment);
         ApiResponse<?> response = new ApiResponse<>();
         response.setMessage("Comment added successfully");
+        return response;
+    }
+
+    @Override
+    public ApiResponse<?> updateComment(Long commentId, Long userId, UpdateCommentRequest request) throws GemsTubeException {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(()->new ResourceNotFoundException(
+                        String.format("Comment with id %d not found",commentId)));
+
+        Long posterId = comment.getCommenter().getId();
+        if (!posterId.equals(userId)) throw new GemsTubeException("only original comment poster allowed to update comment");
+
+        comment.setText(request.getText());
+        commentRepository.save(comment);
+
+        ApiResponse<?> response =  new ApiResponse<>();
+        response.setMessage("Comment updated successfully");
         return response;
     }
 }

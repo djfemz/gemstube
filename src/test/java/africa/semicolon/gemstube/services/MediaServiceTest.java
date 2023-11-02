@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
 
 import static africa.semicolon.gemstube.services.CloudServiceTest.IMAGE_LOCATION;
 import static africa.semicolon.gemstube.services.CloudServiceTest.SUBTITLE_FILE;
@@ -40,8 +39,8 @@ public class MediaServiceTest {
         request.setCreatorId(registerResponse.getId());
         request.setTitle("this is our test media");
         request.setDescription("This is the description");
-        request.setSubtitleFile(Optional.of(getTestFile(SUBTITLE_FILE)));
-        request.setMultipartFile(getTestFile(IMAGE_LOCATION));
+//        request.setSubtitleFile(Optional.of(getTestFile(SUBTITLE_FILE)));
+        request.setMediaFile(getTestFile(IMAGE_LOCATION));
         UploadMediaResponse response = mediaService.upload(request);
         assertThat(response).isNotNull();
     }
@@ -49,7 +48,7 @@ public class MediaServiceTest {
     public static MultipartFile getTestFile(String fileLocation){
         Path path = Paths.get(fileLocation);
         try(var inputStream = Files.newInputStream(path)) {
-            MultipartFile file = new MockMultipartFile("test-image", inputStream);
+            MultipartFile file = new MockMultipartFile(path.getFileName().toString(), inputStream);
             return file;
         }catch (IOException exception){
             exception.printStackTrace();
@@ -69,8 +68,8 @@ public class MediaServiceTest {
         UploadMediaRequest request = new UploadMediaRequest();
         request.setCreatorId(registerResponse.getId());
         request.setTitle("this is our test media");
-        request.setMultipartFile(getTestFile(IMAGE_LOCATION));
-        request.setSubtitleFile(Optional.empty());
+        request.setMediaFile(getTestFile(IMAGE_LOCATION));
+//        request.setSubtitleFile(Optional.empty());
         UploadMediaResponse response = mediaService.upload(request);
 
         UploadSubtitleRequest uploadSubtitleRequest = new UploadSubtitleRequest();
