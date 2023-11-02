@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static jakarta.persistence.EnumType.ORDINAL;
 import static jakarta.persistence.EnumType.STRING;
@@ -26,7 +27,7 @@ public class Media {
     private String title;
     private String description;
     private String url;
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User uploader;
     private LocalDateTime createdAt;
     private  String subtitleUrl;
