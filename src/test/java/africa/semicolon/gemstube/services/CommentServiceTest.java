@@ -27,4 +27,9 @@ public class CommentServiceTest {
         assertThat(response).isNotNull();
         assertThat(response).isInstanceOf(ApiResponse.class);
     }
+
+    @Test
+    public void testUpdateComment(){
+
+    }
 }
