@@ -13,5 +13,7 @@ import java.io.IOException;
 public interface MediaService {
     UploadMediaResponse upload(UploadMediaRequest uploadMediaRequest) throws GemsTubeException, IOException;
     Media getMediaById(Long id) throws GemsTubeException;
+    Long countMediaLikes(Long mediaId) throws GemsTubeException;
+    Media updateMedia(Media media);
     UploadSubtitleResponse uploadSubtitle (UploadSubtitleRequest request) throws GemsTubeException, IOException;
 }
