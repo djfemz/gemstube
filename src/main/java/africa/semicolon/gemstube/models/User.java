@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
+import java.util.List;
+
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -23,4 +25,6 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String password;
+    @Enumerated
+    private List<Authority> authorities;
 }

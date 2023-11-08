@@ -17,4 +17,6 @@ public interface UserService {
     UserResponse getUserBy(Long id) throws GemsTubeException;
 
     List<UserResponse> getUsers(int page, int size);
+
+    User getUserBy(String username);
 }

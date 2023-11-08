@@ -19,7 +19,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class UserController {
 
     private final UserService userService;
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request){
         return ResponseEntity.status(CREATED).body(userService.register(request));
     }

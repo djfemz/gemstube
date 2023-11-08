@@ -27,7 +27,7 @@ public class Media {
     private String title;
     private String description;
     private String url;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
     private User uploader;
     private LocalDateTime createdAt;
     private  String subtitleUrl;
