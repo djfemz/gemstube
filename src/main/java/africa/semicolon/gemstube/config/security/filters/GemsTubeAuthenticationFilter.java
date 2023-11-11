@@ -6,6 +6,8 @@ import africa.semicolon.gemstube.dtos.response.LoginResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -27,10 +29,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class GemsTubeAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
         ObjectMapper mapper = new ObjectMapper();
+
         try {
             //1. extract login credentials from the request
             InputStream inputStream = request.getInputStream();
@@ -45,6 +50,7 @@ public class GemsTubeAuthenticationFilter extends UsernamePasswordAuthentication
                     authenticationManager.authenticate(authentication);
 
             if (authenticationResult.isAuthenticated()) {
+            //4. put the authenticated authentication object in the security context
                 SecurityContextHolder.getContext().setAuthentication(authenticationResult);
                 return authenticationResult;
             }
@@ -55,11 +61,14 @@ public class GemsTubeAuthenticationFilter extends UsernamePasswordAuthentication
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult)
+    protected void successfulAuthentication(HttpServletRequest request,
+                                            HttpServletResponse response,
+                                            FilterChain chain,
+                                            Authentication authResult)
             throws IOException, ServletException {
 
         ObjectMapper mapper = new ObjectMapper();
-        var token = jwtService.generateAccessToken(authResult.getPrincipal().toString());
+        String token = jwtService.generateAccessToken(authResult.getPrincipal().toString());
         LoginResponse loginResponse = new LoginResponse(token);
         response.setContentType(APPLICATION_JSON_VALUE);
         mapper.writeValue(response.getOutputStream(), loginResponse);

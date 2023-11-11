@@ -16,11 +16,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-@Service
+import static africa.semicolon.gemstube.models.Authority.USER;
+
+@Controller
 @AllArgsConstructor
 @Slf4j
 public class GemsTubeUserService implements UserService{
@@ -34,7 +36,7 @@ public class GemsTubeUserService implements UserService{
         User user = new User();
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        user.setAuthorities(List.of(Authority.USER));
+        user.setAuthorities(List.of(USER));
         User savedUser = userRepository.save(user);
         EmailRequest emailRequest = new EmailRequest();
         emailRequest.setRecipients(List.of(new Recipient(savedUser.getEmail(), "Friend")));
